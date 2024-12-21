@@ -8,9 +8,9 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Employee
-        fields = (
-            'email', 'password', 'first_name', 'last_name', 'phone', 'department', 'position', 'payroll', 'hire_date')
-        read_only_fields = ('is_active',)
+        fields = ('email', 'password', 'first_name', 'last_name', 'phone')
+
+        read_only_fields = ('is_active', 'department', 'position', 'payroll', 'hire_date')
 
     def validate_email(self, value):
         if not re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', value):
@@ -34,3 +34,11 @@ class SignUpSerializer(serializers.ModelSerializer):
         employee.set_password(validated_data['password'])
         employee.save()
         return employee
+
+
+class EmployeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Employee
+        fields = (
+            'email', 'password', 'first_name', 'last_name', 'phone', 'department', 'position', 'payroll')
+        read_only_date = ('is_active', 'hire_date')

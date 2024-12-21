@@ -31,7 +31,8 @@ class Employee(AbstractBaseUser):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.EmailField(verbose_name="email", unique=True, max_length=255)
-    phone = models.CharField(max_length=11)
+    phone = models.CharField(max_length=11, unique=True)
+    national_code = models.CharField(max_length=10, unique=True, blank=True, null=True)
     department = models.CharField(max_length=255, null=True, blank=True)  # temp
     payroll = models.CharField(max_length=255, null=True, blank=True)  # temp
     position = models.CharField(max_length=255, null=True, blank=True)  # temp
