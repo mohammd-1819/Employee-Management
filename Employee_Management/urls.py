@@ -19,6 +19,7 @@ urlpatterns = [
 
     # app endpoints
     path('api/employee/', include('employee.urls')),
+    path('api/management/', include('management.urls')),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
