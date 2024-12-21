@@ -64,7 +64,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Leaderboard_System.wsgi.application'
+WSGI_APPLICATION = 'Employee_Management.wsgi.application'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -93,7 +93,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-AUTH_USER_MODEL = 'employee.User'
+AUTH_USER_MODEL = 'employee.Employee'
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'

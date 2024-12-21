@@ -6,25 +6,25 @@ import uuid
 class EmployeeManager(BaseUserManager):
     def create_user(self, email, password=None):
         if not email:
-            raise ValueError("Users must have a valid username")
+            raise ValueError("Employees must have a valid username")
 
-        user = self.model(
+        employee = self.model(
             email=email
 
         )
 
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
+        employee.set_password(password)
+        employee.save(using=self._db)
+        return employee
 
     def create_superuser(self, email, password=None):
-        user = self.create_user(
+        employee = self.create_user(
             email,
             password=password,
         )
-        user.is_admin = True
-        user.save(using=self._db)
-        return user
+        employee.is_admin = True
+        employee.save(using=self._db)
+        return employee
 
 
 class Employee(AbstractBaseUser):
@@ -32,9 +32,9 @@ class Employee(AbstractBaseUser):
     last_name = models.CharField(max_length=255)
     email = models.EmailField(verbose_name="email", unique=True, max_length=255)
     phone = models.CharField(max_length=11)
-    department = models.ForeignKey('', on_delete=models.CASCADE, related_name='employee')
-    payroll = models.OneToOneField('', on_delete=models.CASCADE, related_name='employee')
-    position = models.ForeignKey('', on_delete=models.CASCADE, related_name='employee')
+    department = models.CharField(max_length=255, null=True, blank=True)  # temp
+    payroll = models.CharField(max_length=255, null=True, blank=True)  # temp
+    position = models.CharField(max_length=255, null=True, blank=True)  # temp
     hire_date = models.DateField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False, verbose_name='admin')
