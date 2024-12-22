@@ -8,7 +8,7 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Employee
-        fields = ('email', 'password', 'first_name', 'last_name', 'phone')
+        fields = ('email', 'password', 'first_name', 'last_name', 'national_code', 'phone')
 
         read_only_fields = ('is_active', 'department', 'position', 'payroll', 'hire_date')
 
@@ -40,5 +40,6 @@ class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = (
-            'email', 'password', 'first_name', 'last_name', 'phone', 'department', 'position', 'payroll')
+            'email', 'password', 'first_name', 'last_name', 'phone', 'department', 'national_code', 'position',
+            'payroll')
         read_only_date = ('is_active', 'hire_date')

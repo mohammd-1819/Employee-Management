@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
-import uuid
+from management.models import Department, Position
 
 
 class EmployeeManager(BaseUserManager):
@@ -33,9 +33,9 @@ class Employee(AbstractBaseUser):
     email = models.EmailField(verbose_name="email", unique=True, max_length=255)
     phone = models.CharField(max_length=11, unique=True)
     national_code = models.CharField(max_length=10, unique=True, blank=True, null=True)
-    department = models.CharField(max_length=255, null=True, blank=True)  # temp
-    payroll = models.CharField(max_length=255, null=True, blank=True)  # temp
-    position = models.CharField(max_length=255, null=True, blank=True)  # temp
+    department = models.ForeignKey(Department, on_delete=models.SET_NULL, related_name='employee', blank=True,
+                                   null=True)
+    position = models.ForeignKey(Position, on_delete=models.SET_NULL, blank=True, null=True)
     hire_date = models.DateField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False, verbose_name='admin')
