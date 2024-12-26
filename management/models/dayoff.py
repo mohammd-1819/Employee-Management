@@ -11,7 +11,7 @@ class DayOff(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     reason = models.TextField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0])
 
     def __str__(self):
         return f"'{self.employee.email}' day off request"

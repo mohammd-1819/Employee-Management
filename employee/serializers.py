@@ -1,6 +1,7 @@
 import re
 from rest_framework import serializers
 from employee.models import Employee
+from management.models import Payroll
 
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -37,9 +38,33 @@ class SignUpSerializer(serializers.ModelSerializer):
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
+    base_salary = serializers.DecimalField(max_digits=10, decimal_places=0, write_only=True)
+    bonus = serializers.DecimalField(max_digits=10, decimal_places=0, write_only=True, default=0)
+    deductions = serializers.DecimalField(max_digits=10, decimal_places=0, write_only=True, default=0)
+    payment_date = serializers.DateField(write_only=True)
+
     class Meta:
         model = Employee
         fields = (
-            'email', 'password', 'first_name', 'last_name', 'phone', 'department', 'national_code', 'position',
-            'payroll')
-        read_only_date = ('is_active', 'hire_date')
+            'email', 'password', 'first_name', 'last_name', 'phone', 'department',
+            'national_code', 'position', 'base_salary', 'bonus', 'deductions', 'payment_date'
+        )
+        read_only_fields = ('is_active', 'hire_date')
+
+    def create(self, validated_data):
+        payroll_data = {
+            'base_salary': validated_data.pop('base_salary'),
+            'bonus': validated_data.pop('bonus'),
+            'deductions': validated_data.pop('deductions'),
+            'payment_date': validated_data.pop('payment_date')
+        }
+
+        # ایجاد کارمند
+        employee = Employee.objects.create(**validated_data)
+        employee.set_password(validated_data['password'])
+        employee.save()
+
+        # ایجاد حقوق مرتبط با کارمند
+        Payroll.objects.create(employee=employee, **payroll_data)
+
+        return employee
