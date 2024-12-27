@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import department, attendance, dayoff
+from .views import department, attendance, dayoff, payroll
 
 app_name = 'management'
 
@@ -14,5 +14,7 @@ urlpatterns = [
     path('day-off/request/', dayoff.DayOffRequestView.as_view(), name='dayoff-request'),
     path('day-off/status/check/<int:day_off_id>/', dayoff.DayOffStatusView.as_view(), name='dayoff-status'),
     path('day-off/delete/<int:day_off_id>/', dayoff.DayOffDeleteView.as_view(), name='dayoff-delte'),
-    path('day-off/employee/requests/', dayoff.EmployeeDayOffList.as_view(), name='dayoff-employee-list')
+    path('day-off/employee/requests/', dayoff.EmployeeDayOffList.as_view(), name='dayoff-employee-list'),
+
+    path('payroll/employee/', payroll.EmployeePayrollView.as_view(), name='payroll-employee')
 ]
