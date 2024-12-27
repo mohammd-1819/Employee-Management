@@ -6,7 +6,6 @@ from drf_spectacular.utils import extend_schema
 from ..serializers import DepartmentSerializer
 from ..utility.pagination import Pagination
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from django.shortcuts import get_object_or_404
 
 
 class DepartmentListView(APIView, Pagination):
