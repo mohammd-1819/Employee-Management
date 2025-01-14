@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16
+    container_name: postgres_container
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: employee_management
+    ports:
+      - "5432:5432"
+
+  web:
+    build:
+      context: .
+    container_name: django_container
+    command: >
+      sh -c "while ! nc -z db 5432; do
+             echo 'Waiting for PostgreSQL...';
+             sleep 1;
+             done;
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://postgres:admin@db:5432/employee_management
+      POSTGRES_DB: employee_management
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      DB_HOST: db
+
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
